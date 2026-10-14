@@ -5,7 +5,7 @@
   gather_facts: false
 
   vars:
-    servicenow_instance: "https://dev207167.service-now.com"
+    servicenow_instance: "{{ servicenow_instance }}"
     servicenow_username: "{{ lookup('env', 'SNOW_USERNAME') }}"
     servicenow_password: "{{ lookup('env', 'SNOW_PASSWORD') }}"
 
