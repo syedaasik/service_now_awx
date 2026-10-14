@@ -12,7 +12,7 @@
   tasks:
     - name: Test ServiceNow API connection
       ansible.builtin.uri:
-        url: "{{ servicenow_instance }}/api/now/table/incident?sysparm_limit=1"
+        url: "{{ servicenow_instance }}/api/now/table/incident?sysparm_limit=5"
         method: GET
         user: "{{ servicenow_username }}"
         password: "{{ servicenow_password }}"
