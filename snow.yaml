@@ -23,7 +23,7 @@
         status_code: 200
         return_content: true
       register: servicenow_response
-      no_log: true
+      no_log: false
 
     - name: Display connection status
       ansible.builtin.debug:
