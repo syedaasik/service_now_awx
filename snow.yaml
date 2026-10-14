@@ -31,4 +31,4 @@
 
     - name: Display retrieved incident count
       ansible.builtin.debug:
-        msg: "Incidents retrieved: {{ servicenow_response.json.result | length }}"
+        msg: "Incidents retrieved: {{ servicenow_response.json.result }}"
