@@ -1,0 +1,46 @@
+---
+- name: Create an incident in ServiceNow
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    servicenow_instance: "{{ servicenow_instance }}"
+    servicenow_username: "{{ lookup('env', 'SNOW_USERNAME') }}"
+    servicenow_password: "{{ lookup('env', 'SNOW_PASSWORD') }}"
+    servicenow_caller_id: "syed"
+
+  tasks:
+    - name: Create incident in ServiceNow
+      ansible.builtin.uri:
+        url: "{{ servicenow_instance }}/api/now/table/incident"
+        method: POST
+
+        user: "{{ servicenow_username }}"
+        password: "{{ servicenow_password }}"
+        force_basic_auth: true
+        validate_certs: true
+        headers:
+          Accept: "application/json"
+          Content-Type: "application/json"
+
+        body_format: json
+        body:
+          short_description: "Linux server CPU utilization is high"
+          description: "CPU utilization exceeded the defined threshold. Please investigate the server."
+          urgency: "2"
+          impact: "2"
+          caller_id: "{{ servicenow_caller_id | default(omit) }}"
+
+        status_code: 201
+        return_content: true
+
+      register: incident_response
+      no_log: true
+
+    - name: Display created incident details
+      ansible.builtin.debug:
+        msg:
+          - "Incident created successfully."
+          - "Incident Number: {{ incident_response.json.result.number }}"
+          - "Incident Sys ID: {{ incident_response.json.result.sys_id }}"
