@@ -36,7 +36,7 @@
         return_content: true
 
       register: incident_response
-      no_log: true
+      no_log: false
 
     - name: Display created incident details
       ansible.builtin.debug:
